@@ -3,6 +3,7 @@
  "children": [
   {
    "name": "資訊部",
+   "totPrice": 38706,
    "children": [
     {"name": "維護相關費用", "size": 9000},
     {"name": "虛擬主機", "size": 4000},
@@ -19,6 +20,7 @@
   },
   {
    "name": "學會部",
+   "totPrice": 366926,
    "children": [
     {"name": "新生盃球類競賽", "size": 251916},
     {"name": "新生盃男生籃球", "size": 40845},

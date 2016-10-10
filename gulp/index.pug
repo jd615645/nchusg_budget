@@ -1,0 +1,27 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    title budget
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css')
+    link(rel='stylesheet', href='./css/main.css')
+  body
+    .ui.container
+      .ui.grid.stackable
+        .ten.wide.column
+          #budgetSvg
+        .six.wide.column
+          h1#dep
+            | 部門:
+            span
+          h1#item
+            | 項目:
+            span
+          h1#budget
+            | 預算:
+            span
+          h1#canBuy
+    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js')
+    script(src='//d3js.org/d3.v3.min.js')
+    script(src='./js/main.js')
