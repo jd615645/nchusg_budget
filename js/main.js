@@ -1,7 +1,11 @@
+var MAX_YEAR = 2016,
+    MIN_YEAR = 2014;
 d3.select(window).on('resize', rendering);
 
 var stroke_color = '#4993FA';
 var can_buy;
+var now_year = 2016;
+var budgetSW = true;
 
 $.getJSON('./data/canBuy.json', function(data){
   can_buy = data;
@@ -14,12 +18,9 @@ function rendering() {
   var margin_size = 350;
   var window_size = $(window).width();
   if (window_size >= 1127) {
-    margin_size = 350;
-  }
-  else if (window_size >= 933) {
     margin_size = 300;
   }
-  else if (window_size >= 723) {
+  else if (window_size >= 933) {
     margin_size = 250;
   }
   else {
@@ -94,7 +95,6 @@ function rendering() {
           $(this).attr({'stroke-width': 3})
         })
         .on('mouseout', function(p) {
-          hoverView(p);
           $(this).attr({'stroke-width': 0})
         });
 
@@ -102,11 +102,11 @@ function rendering() {
       // console.log(p);
       var dep = p.parent.name;
       var item = p.name;
-      var price = '$ ' + formatPrice(p.size);
+      var price = p.size;
       $('#dep span').text(dep);
       $('#item span').text(item);
-      $('#budget span').text(price);
-      $('#canBuy').text(canBuy(p.size));
+      $('#budget span').text('$ ' + formatPrice(price));
+      $('#canBuy').text(canBuy(price));
     }
 
     function hoverView(p) {
@@ -191,7 +191,6 @@ function rendering() {
               $(this).attr({'stroke-width': 3})
             })
             .on('mouseout', function(p) {
-              hoverView(p);
               $(this).attr({'stroke-width': 0})
             })
             .each(function(d) { this._current = enterArc(d); });
@@ -247,11 +246,47 @@ function canBuy(price) {
 
 // ex: formatPrice(9487) -> 9,487
 function formatPrice(number) {
-  var num = number.toString();
-  var pattern = /(-?\d+)(\d{3})/;
+  try {
+    var num = number.toString();
+    var pattern = /(-?\d+)(\d{3})/;
 
-  while(pattern.test(num)) {
-    num = num.replace(pattern, "$1,$2");
+    while(pattern.test(num)) {
+      num = num.replace(pattern, "$1,$2");
+    }
+    return num;
+  } catch (e) {
+
   }
-  return num;
 }
+
+$('#budgetSW').click(function() {
+  if (budgetSW) {
+    $('#budgetSW span:nth-child(1)').hide();
+    $('#budgetSW span:nth-child(2)').fadeIn();
+  }
+  else {
+    $('#budgetSW span:nth-child(1)').fadeIn();
+    $('#budgetSW span:nth-child(2)').hide();
+  }
+  budgetSW = !budgetSW;
+})
+
+$('#ctrlYear .left-btn').click(function() {
+  if ((now_year-1) < MIN_YEAR) {
+    // do nothing
+  }
+  else {
+    now_year -= 1;
+    $('#year .value').html(now_year);
+  }
+})
+$('#ctrlYear .right-btn').click(function() {
+  console.log('right');
+  if ((now_year+1) > MAX_YEAR) {
+    // do nothing
+  }
+  else {
+    now_year += 1;
+    $('#year .value').html(now_year);
+  }
+})
