@@ -1,0 +1,34 @@
+extends layout
+block css
+    link(rel='stylesheet', href='./styles/main.css')
+block content
+  .ui.container
+    //- .ui.button#budgetSW
+      span
+        | 歲出
+      span
+        | 歲入
+    #ctrlYear
+      .ui.icon.button.left-btn
+        i.icon.caret.left
+      .ten.wide.column#year
+        .ui.horizontal.statistic
+          .value
+            | 2016
+          .label
+            | 年
+      .ui.icon.button.right-btn
+        i.icon.caret.right
+    .ui.grid.stackable
+      .ten.wide.column
+        #budgetSvg
+      .six.wide.column
+        h1#dep
+        h1#item
+        h1#budget
+          | 預算:
+          span
+        h1 約為：
+        h1#canBuy
+block js
+    script(src='./js/budget1.js')

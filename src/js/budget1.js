@@ -1,16 +1,92 @@
 var MAX_YEAR = 2016,
     MIN_YEAR = 2014;
-d3.select(window).on('resize', rendering);
+
+var url = 'https://script.google.com/macros/s/AKfycbxzWsLrzHonUiQe9RCDhoVdcYpoU_3NuYcwi1RMBI_PN2qX6hva/exec';
+
+var query_obj = {
+  SELECT_COLUMN: [
+    "款", "科", "目", "金額"
+  ]
+};
+//
+$.get(url, {query: JSON.stringify(query_obj)}, function(response){
+  var inputData = response.output;
+  var a = d3.nest()
+            .key(function(d) { return d['款']; })
+            .entries(inputData);
+  console.log(a);
+  d3.json(response.output, function(d){
+    dataset = d.data;
+
+    console.log(dataset, "原始資料"); //顯示原始資料
+
+    var nodesByType = d3.nest() //轉換成巢狀架構
+      .key(function(d) { return d.type; }) //回傳type
+      .key(function(d) { return d.account; }) //回傳account
+      .entries(dataset); //輸入的資料
+
+    console.log(nodesByType, "基本d3.js巢狀結構轉換")
+  });
+});
+
+
 
 var stroke_color = '#4993FA';
 var can_buy;
 var now_year = 2016;
 var budgetSW = true;
 
+var budgetJSON = {'name':  'flare', 'children': []};
+
+$.getJSON('./data/budget_out.json', function(budgetData){
+    for (var fund=0; fund<budgetData.length; fund++) {
+    var totPrice = 0;
+    var D3children =
+      {
+        'name': budgetData[fund]['fund'],
+        'totPrice': 0,
+        'children': []
+      };
+    var budgetFamily = budgetData[fund]['family'];
+    for (var family=0; family<budgetFamily.length; family++) {
+      var familyName = budgetFamily[family]['name'],
+          budgetMesh = budgetFamily[family]['mesh'];
+      var meshPrice = 0;
+      var familyChild =
+        {
+            'name': familyName,
+            'totPrice': 0,
+            'children': []
+        };
+      // console.log({'name': familyName});
+
+      for (var mesh=0; mesh<budgetMesh.length; mesh++) {
+        // console.log(budgetMesh[mesh]);
+        var meshName = budgetMesh[mesh]['name'],
+            meshMoney = budgetMesh[mesh]['money'];
+        meshPrice += parseInt(meshMoney);
+        familyChild['children'][mesh] = ({'name': meshName, 'size': meshMoney});
+      }
+      familyChild['totPrice'] = meshPrice;
+      // console.log(familyChild);
+
+      totPrice += familyChild['totPrice'];
+      D3children['children'][family] = familyChild;
+    }
+    D3children['totPrice'] = totPrice;
+
+    // console.log(D3children);
+    budgetJSON['children'][fund] = D3children;
+  }
+  console.log(budgetJSON);
+
+  // d3.select(window).on('resize', rendering);
+
+  rendering();
+});
+
 $.getJSON('./data/canBuy.json', function(data){
   can_buy = data;
-  // console.log(can_buy);
-  rendering();
 });
 
 function rendering() {
@@ -29,7 +105,8 @@ function rendering() {
 
   var margin = {top: margin_size, right: margin_size, bottom: margin_size, left: margin_size},
       radius = Math.min(margin.top, margin.right, margin.bottom, margin.left) - 10;
-  var hue = d3.scale.category10();
+  // color
+  var hue = d3.scale.category20();
 
   var luminance = d3.scale.sqrt()
       .domain([0, 1e6])
@@ -54,10 +131,14 @@ function rendering() {
       .innerRadius(function(d) { return radius / 3 * d.depth; })
       .outerRadius(function(d) { return radius / 3 * (d.depth + 1) - 1; });
 
-  d3.json('./data/data.json', function(error, root) {
+  // d3.json('./data/org.json', function(error, root) {
     // Compute the initial layout on the entire tree to sum sizes.
     // Also compute the full name and fill color for each node,
     // and stash the children so they can be restored as we descend.
+
+    // console.log(budget);
+    root = budgetJSON;
+
     partition
         .value(function(d) { return d.size; })
         .nodes(root)
@@ -103,8 +184,8 @@ function rendering() {
       var dep = p.parent.name;
       var item = p.name;
       var price = p.size;
-      $('#dep span').text(dep);
-      $('#item span').text(item);
+      $('#dep').text(dep);
+      $('#item').text(item);
       $('#budget span').text('$ ' + formatPrice(price));
       $('#canBuy').text(canBuy(price));
     }
@@ -122,8 +203,8 @@ function rendering() {
         var price = p.totPrice;
       }
 
-      $('#dep span').text(dep);
-      $('#item span').text(item);
+      $('#dep').text(dep);
+      $('#item').text(item);
       $('#budget span').text('$ ' + formatPrice(price));
       $('#canBuy').text(canBuy(price));
     }
@@ -200,7 +281,7 @@ function rendering() {
             .attrTween('d', function(d) { return arcTween.call(this, updateArc(d)); });
       });
     }
-  });
+  // });
 
   function key(d) {
     var k = [], p = d;
@@ -211,7 +292,7 @@ function rendering() {
   function fill(d) {
     var p = d;
     while (p.depth > 1) p = p.parent;
-    var c = d3.lab(hue(p.name));
+    var c = d3.lab(hue(p.totPrice));
     c.l = luminance(d.sum);
     return c;
   }
