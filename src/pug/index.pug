@@ -1,34 +1,28 @@
 extends layout
 block css
-    link(rel='stylesheet', href='./styles/main.css')
+  link(rel='stylesheet', href='./styles/bubbletree.css')
+  link(rel='stylesheet', href='./styles/budget_view.css')
 block content
-  .ui.container
-    //- .ui.button#budgetSW
-      span
-        | 歲出
-      span
-        | 歲入
-    #ctrlYear
-      .ui.icon.button.left-btn
-        i.icon.caret.left
-      .ten.wide.column#year
-        .ui.horizontal.statistic
-          .value
-            | 2016
-          .label
-            | 年
-      .ui.icon.button.right-btn
-        i.icon.caret.right
-    .ui.grid.stackable
-      .ten.wide.column
-        #budgetSvg
-      .six.wide.column
-        h1#dep
-        h1#item
-        h1#budget
-          | 預算:
-          span
-        h1 約為：
-        h1#canBuy
+  .bubbletree-wrapper
+    .bubbletree
+  .detail-data
+    h1#deptHeader
+      | 部門
+    h1#thisYearBudget
+      | 本年度預算：
+      span#amount
+    h1#lastYearBudget
+      | 前年度預算：
+      span#lastAmount
+      span#diffPercent
+    h1#canBuy
 block js
-    script(src='./js/budget1.js')
+  script(type='text/javascript', src='./js/jquery.min.js')
+  script(type='text/javascript', src='./js/jquery-migrate.min.js')
+  script(type='text/javascript', src='./js/jquery.history.js')
+  script(type='text/javascript', src='./js/jquery.tooltip.min.js')
+  script(type='text/javascript', src='./js/raphael-min.js')
+  script(type='text/javascript', src='./js/Tween.js')
+  script(type='text/javascript', src='./js/bubbletree.js')
+  script(type='text/javascript' src='./js/cofog.js')
+  script(type='text/javascript', src='./js/budget_view.js')
