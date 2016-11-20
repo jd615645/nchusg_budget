@@ -41,7 +41,7 @@ $(document).ready(function() {
   }
   function table_dept() {
     $tableHead.html('<tr><th>款別</th><th>金額</th><th>前一年差距</th></tr>');
-    $.each(budgetFormatData['children'], function(key, val) {
+    $.each(budgetAll['children'], function(key, val) {
       var dept = val.dept,
           label = val.label,
           amount = val.amount,
@@ -55,7 +55,7 @@ $(document).ready(function() {
   }
   function table_subject() {
     $tableHead.html('<tr><th>款</th><th>科</th><th>金額</th><th>前一年差距</th></tr>');
-    $.each(budgetFormatData['children'], function(ik, iv) {
+    $.each(budgetAll['children'], function(ik, iv) {
       $.each(iv['children'], function(jk, jv) {
         var dept = jv.dept,
             label = jv.label,
