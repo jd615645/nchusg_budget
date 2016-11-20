@@ -3,21 +3,43 @@ block css
   link(rel='stylesheet', href='./styles/bubbletree.css')
   link(rel='stylesheet', href='./styles/budget_view.css')
 block content
-  .bubbletree-wrapper
-    .bubbletree
-  .detail-data
-    h1#deptHeader
-      | 部門
-    h1#thisYearBudget
-      | 本年度預算：
-      span#amount
-    h1#lastYearBudget
-      | 前年度預算：
-      span#lastAmount
-      span#diffPercent
-    h1#canBuy
+  .ui.container
+    .ui.secondary.pointing.menu#budgetMenu
+      a.active.item(data-tab='first')
+        | 行星圖
+      a.item(data-tab='second')
+        | 科目預算表格
+      a.right.ui.item(data-tab='third')
+        | 關於此網頁
+    .ui.active.tab#bubbletView(data-tab='first')
+      .bubbletree-wrapper
+        .bubbletree
+      .detail-data
+        h2#deptHeader
+          | 部門
+        h2#thisYearBudget
+          | 本年度預算約
+          span#amount
+        h3#canBuy
+        h2#lastYearBudget
+          | 前年度預算約
+          span#lastAmount
+          span#diffPercent
+    .ui.tab#budgetTable(data-tab='second')
+      .ui.secondary.menu
+        a.item.active(view-type='1') 總科目表
+        a.item(view-type='2') 只看款
+        a.item(view-type='3') 只看科
+      table.ui.unstackable.striped.table
+        thead
+          tr
+        tbody
+    .ui.tab#aboutWeb(data-tab='third')
+      p JS Library
+      ul
+        li 1
+
 block js
-  script(type='text/javascript', src='./js/jquery.min.js')
   script(type='text/javascript', src='./js/jquery-migrate.min.js')
   script(type='text/javascript', src='./js/jquery.history.js')
   script(type='text/javascript', src='./js/jquery.tooltip.min.js')
@@ -26,3 +48,4 @@ block js
   script(type='text/javascript', src='./js/bubbletree.js')
   script(type='text/javascript' src='./js/cofog.js')
   script(type='text/javascript', src='./js/budget_view.js')
+  script(type='text/javascript', src='./js/budget_table.js')

@@ -2,11 +2,29 @@
   font-family:'Roboto', '黑體-繁', '微軟正黑體', sans-serif;
 }
 .bubbletree-wrapper {
-  width: 65% !important;
+  height: 90%;
+  width: 50% !important;
 }
 .detail-data {
-  width: 35%;
+  width: 40%;
   position: absolute;
-  left: 65%;
+  left: 60%;
   right: 0;
+}
+
+#budgetTable table {
+  thead th, tbody td {
+    text-align: right;
+    &:first-child {
+      text-align: left;
+    }
+  }
+  span {
+    &.upper {
+      color: green;
+    }
+    &.lower {
+      color: red;
+    }
+  }
 }

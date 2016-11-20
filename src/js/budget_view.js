@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
   var sheetKey = 'AKfycbxzWsLrzHonUiQe9RCDhoVdcYpoU_3NuYcwi1RMBI_PN2qX6hva';
   var url = 'https://script.google.com/macros/s/' + sheetKey + '/exec';
   var deptColor =
@@ -12,21 +13,22 @@ $(document).ready(function() {
       "款", "科", "目", "金額", "前年度預算"
     ]
   };
-  var budgetAll = {'dept': '總預算','label': '總預算', 'amount': 0, 'last_amount': 0, 'children': []};
+  window.budgetAll = {'dept': '總預算','label': '總預算', 'amount': 0, 'last_amount': 0, 'children': []};
 
   var can_buy;
 
   var budgetData = [];
-  // $.get('./data/budget.json', function(response) {
-  //   var inputData = response;
   $.getJSON('./data/canBuy.json', function(data){
     can_buy = data;
   });
-  $.get(url, {query: JSON.stringify(query_obj)}, function(response) {
-    var inputData = response.output;
+  $.get('./data/budget.json', function(response) {
+    window.budgetDataJson = response;
+  // $.get(url, {query: JSON.stringify(query_obj)}, function(response) {
+  //   var budgetDataJson = response.output;
+  //   console.log(JSON.stringify(budgetDataJson));
 
     // 將budget data做巢狀結構
-    $.each(inputData, function(key, val) {
+    $.each(budgetDataJson, function(key, val) {
       var dept = val['款'],
           money= parseInt(val['金額']),
           lastMoney = parseInt(val['前年度預算']);
@@ -103,8 +105,8 @@ $(document).ready(function() {
       }
 
       $('#deptHeader').text(deptHeader);
-      $('#amount').text(formatNumber(amount));
-      $('#lastAmount').text(formatNumber(last_amount));
+      $('#amount').text(' ' + formatNumber(amount));
+      $('#lastAmount').text(' ' + formatNumber(last_amount));
       $('#diffPercent').text(diffPercent);
       $('#canBuy').text(canBuy(amount));
     };
@@ -124,7 +126,7 @@ $(document).ready(function() {
           fixNum = 0;
         }
         conver = (conver).toFixed(fixNum);
-        return formatNumber(conver) + ' ' + itemUnit + itemName;
+        return formatNumber(conver) + itemUnit + ' ' + itemName;
       }
     }
 
@@ -151,5 +153,6 @@ $(document).ready(function() {
       firstNodeCallback: onNodeClick
     });
 
+    $('#budgetMenu>.item').tab();
   });
 })
