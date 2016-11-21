@@ -152,7 +152,5 @@ $(document).ready(function() {
       nodeClickCallback: onNodeClick,
       firstNodeCallback: onNodeClick
     });
-
-    $('#budgetMenu>.item').tab();
   });
 })

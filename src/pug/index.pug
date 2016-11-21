@@ -3,6 +3,7 @@ block css
   link(rel='stylesheet', href='./styles/bubbletree.css')
   link(rel='stylesheet', href='./styles/budget_view.css')
 block content
+  #fb-root
   .ui.container
     .ui.secondary.pointing.menu#budgetMenu
       a.active.item(data-tab='first')
@@ -25,19 +26,63 @@ block content
           | 前年度預算約
           span#lastAmount
           span#diffPercent
+        .ui.accordion#detail
+          .title
+            i.dropdown.icon
+            | 詳細資料
+          .content
+            .transition.hidden
+        .fb-comments(data-href='http://budget.sakamoto.com.tw', data-numposts='3', data-width="100%")
+
     .ui.tab#budgetTable(data-tab='second')
       .ui.secondary.menu
         a.item.active(view-type='1') 總科目表
         a.item(view-type='2') 只看款
         a.item(view-type='3') 只看科
+      .ui.action.input#searchInput
+        input(type='text', placeholder='搜尋款科目名稱...')
+        button.ui.button Search
+
       table.ui.unstackable.striped.table
         thead
           tr
         tbody
     .ui.tab#aboutWeb(data-tab='third')
-      p JS Library
-      ul
-        li 1
+      table
+        tr
+          td 使用套件
+          td Semantic UI
+        tr
+          td
+          td JQuery
+        tr
+          td
+          td
+            a(href='https://github.com/okfn/bubbletree' target='_blank') okfn/bubbletree
+
+      table
+        tr
+          td Data Source
+          td
+            a(href='https://drive.google.com/drive/folders/0B370vEVixLOxRUUzT205eWs0cTQ' target='_blank') 2016年中興大學學生會歲出預算excel
+        tr
+          td
+          td
+            a(href='#', target='_blank') 2016年中興大學學生會歲出預算JSON
+        tr
+          td
+          td
+            a(href='#', target='_blank') 2016年中興大學學生會歲出預算CSV
+      table
+        tr
+          td Data converter
+          td
+            a(href='https://github.com/David-Tsui/Google_Spreadsheet_RESTful', target='_blank') David-Tsui/Google_Spreadsheet_RESTful
+      table
+        tr
+          td Project Github
+          td
+            a(href='https://github.com/jd615645/nchusg_budget' target='_blank') jd615645/nchusg_budget
 
 block js
   script(type='text/javascript', src='./js/jquery-migrate.min.js')
@@ -46,6 +91,7 @@ block js
   script(type='text/javascript', src='./js/raphael-min.js')
   script(type='text/javascript', src='./js/Tween.js')
   script(type='text/javascript', src='./js/bubbletree.js')
-  script(type='text/javascript' src='./js/cofog.js')
-  script(type='text/javascript', src='./js/budget_view.js')
-  script(type='text/javascript', src='./js/budget_table.js')
+  script(type='text/javascript', src='./js/cofog.js')
+  script(type='text/javascript', src='./js/semanticui-init.js')
+  script(type='text/javascript', src='./js/budget-view.js')
+  script(type='text/javascript', src='./js/budget-table.js')

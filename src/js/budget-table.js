@@ -4,27 +4,46 @@ $(document).ready(function() {
   $('#budgetMenu .item[data-tab="second"]').click(function() {
     $('#budgetTable .menu .item:first-child()').click();
   })
-  $('#budgetTable .menu .item').click(function() {
-    $('#budgetTable .menu .active').removeClass('active');
-    $(this).addClass('active');
-    var viewType = $(this).attr('view-type');
 
-    $tableHead.empty();
-    $tableBody.empty();
+  function showTable() {
+    var keyword = $('#searchInput input').val();
+    var viewType = $('#budgetTable .menu .active').attr('view-type');
+
+    clearTable();
 
     switch (viewType) {
       case '1':
-        table_all();
+        table_all(keyword);
         break;
       case '2':
-        table_dept();
+        table_dept(keyword);
         break;
       case '3':
-        table_subject();
+        table_subject(keyword);
         break;
     }
+  }
+
+  $('#budgetTable .menu .item').click(function() {
+    $('#budgetTable .menu .active').removeClass('active');
+    $(this).addClass('active');
+    showTable();
   });
-  function table_all() {
+
+  $('#searchInput')
+    .on('click', 'button', function() {
+      showTable();
+      $('#searchInput input').val('');
+    })
+    .keypress(function(event) {
+
+      if(event.which == 13) {
+        showTable();
+        $('#searchInput input').val('');
+      }
+    });
+
+  function table_all(keyword) {
     $tableHead.html('<tr><th>款</th><th>科</th><th>目</th><th>金額</th><th>前一年差距</th></tr>');
     $.each(budgetDataJson, function(key, val) {
       var dept = val['款'],
@@ -36,38 +55,69 @@ $(document).ready(function() {
 
       var tableData = '<tr><td>' + dept + '</td><td>' + subject + '</td><td>' + item + '</td><td>' + amount.toLocaleString('en-US') + '</td><td>' + diffPrice.toLocaleString('en-US') + '<span class="' + diffPriceColor(diffPrice) + '">' + diffPercent(diffPrice, amount) + '</span>' + '</td>' +'  </tr>';
 
-      $tableBody.append(tableData);
+      if(keyword != '') {
+        if (haveKeyword(dept, subject, item, keyword)) {
+          $tableBody.append(tableData);
+        }
+      }
+      else {
+        // if no keyword input
+        $tableBody.append(tableData);
+      }
     })
   }
-  function table_dept() {
+  function table_dept(keyword) {
     $tableHead.html('<tr><th>款別</th><th>金額</th><th>前一年差距</th></tr>');
     $.each(budgetAll['children'], function(key, val) {
       var dept = val.dept,
-          label = val.label,
+          subject = '',
+          item = '',
           amount = val.amount,
           lastMoney = val.last_amount;
       var diffPrice = amount-lastMoney;
 
       var tableData = '<tr><td>' + dept + '</td><td>' + amount.toLocaleString('en-US') + '</td><td>' + diffPrice.toLocaleString('en-US') + '<span class="' + diffPriceColor(diffPrice) + '">' + diffPercent(diffPrice, amount) + '</span>' + '</td>' +'  </tr>';
 
-      $tableBody.append(tableData);
+      if(keyword != '') {
+        if (haveKeyword(dept, subject, item, keyword)) {
+          $tableBody.append(tableData);
+        }
+      }
+      else {
+        $tableBody.append(tableData);
+      }
     });
   }
-  function table_subject() {
+  function table_subject(keyword) {
     $tableHead.html('<tr><th>款</th><th>科</th><th>金額</th><th>前一年差距</th></tr>');
     $.each(budgetAll['children'], function(ik, iv) {
       $.each(iv['children'], function(jk, jv) {
         var dept = jv.dept,
-            label = jv.label,
+            subject = jv.label,
+            item = '',
             amount = jv.amount,
             lastMoney = jv.last_amount;
         var diffPrice = amount-lastMoney;
 
-        var tableData = '<tr><td>' + dept + '</td><td>' + label + '</td><td>' + amount.toLocaleString('en-US') + '</td><td>' + diffPrice.toLocaleString('en-US') + '<span class="' + diffPriceColor(diffPrice) + '">' + diffPercent(diffPrice, amount) + '</span>' + '</td>' +'  </tr>';
+        var tableData = '<tr><td>' + dept + '</td><td>' + subject + '</td><td>' + amount.toLocaleString('en-US') + '</td><td>' + diffPrice.toLocaleString('en-US') + '<span class="' + diffPriceColor(diffPrice) + '">' + diffPercent(diffPrice, amount) + '</span>' + '</td>' +'  </tr>';
 
-        $tableBody.append(tableData);
+        if(keyword != '') {
+          if (haveKeyword(dept, subject, item, keyword)) {
+            $tableBody.append(tableData);
+          }
+        }
+        else {
+          $tableBody.append(tableData);
+        }
       })
     })
+  }
+
+  function haveKeyword(dept, subject, item, keyword) {
+    if ((dept.search(keyword) != -1) || (subject.search(keyword) != -1) || (item.search(keyword) != -1)) {
+      return true;
+    }
+    return false;
   }
 
   function diffPercent(diffPrice, amount) {
@@ -80,7 +130,7 @@ $(document).ready(function() {
       prefix = '+';
     }
 
-    var diffPercent = ' ' + prefix + (diffPrice/amount*100).toFixed(2) + '%';
+    var diffPercent = prefix + (diffPrice/amount*100).toFixed(2) + '%';
 
     return ' (' + diffPercent + ')';
   }
@@ -95,5 +145,8 @@ $(document).ready(function() {
       return '';
     }
   }
-
+  function clearTable() {
+    $tableHead.empty();
+    $tableBody.empty();
+  }
 });

@@ -1,25 +1,31 @@
 * {
   font-family:'Roboto', '黑體-繁', '微軟正黑體', sans-serif;
 }
+h1, h2, h3 {
+  font-family:'Roboto', '黑體-繁', '微軟正黑體', sans-serif !important;
+}
+.ui.container {
+  position: relative;
+  height: 100%;
+}
+
 .bubbletree-wrapper {
   height: 90%;
-  width: 50% !important;
+  width: 60%;
 }
-@media screen and (min-width: 1650px) {
-  .bubbletree-wrapper {
-    width: 40% !important;
-  }
-}
-@media screen (min-width: 1450px) and (max-width: 1650px) {
-  .bubbletree-wrapper {
-    width: 45% !important;
-  }
-}
-.detail-data {
-  width: 40%;
-  position: absolute;
-  left: 60%;
-  right: 0;
+// @media screen (min-width: 1450px) and (max-width: 1650px) {
+//   .bubbletree-wrapper {
+//     width: 45% !important;
+//   }
+// }
+// @media screen and (min-width: 1650px) {
+//   .bubbletree-wrapper {
+//     width: 40% !important;
+//   }
+// }
+
+.ui.tab {
+  height: 70%;
 }
 
 #budgetTable table {
@@ -36,5 +42,33 @@
     &.lower {
       color: red;
     }
+  }
+}
+.detail-data {
+  height: 100%;
+  width: 40%;
+  position: absolute;
+  left: 60%;
+  right: 0;
+}
+
+
+#aboutWeb table {
+  margin-top: 10px;
+  width: 100%;
+  td {
+    text-align: left;
+    font-size: 16px;
+    padding: 5px;
+    &:first-child {
+      width: 20%;
+      border-right: 5px solid #ddd;
+    }
+  }
+}
+#detail {
+  font-size: 1.714rem;
+  .content {
+    padding-top: 0px;
   }
 }
