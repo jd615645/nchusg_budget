@@ -12,20 +12,13 @@ h1, h2, h3 {
 .bubbletree-wrapper {
   height: 90%;
   width: 60%;
+  .bubbletree-desc {
+    font-size: 16px !important;
+  }
 }
-// @media screen (min-width: 1450px) and (max-width: 1650px) {
-//   .bubbletree-wrapper {
-//     width: 45% !important;
-//   }
-// }
-// @media screen and (min-width: 1650px) {
-//   .bubbletree-wrapper {
-//     width: 40% !important;
-//   }
-// }
-
 .ui.tab {
-  height: 70%;
+  position: relative;
+  height: 90%;
 }
 
 #budgetTable table {
@@ -50,6 +43,12 @@ h1, h2, h3 {
   position: absolute;
   left: 60%;
   right: 0;
+
+  flex-direction: column;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
 }
 
 

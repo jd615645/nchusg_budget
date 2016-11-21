@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+  var YEAR = 2016;
   var sheetKey = 'AKfycbxzWsLrzHonUiQe9RCDhoVdcYpoU_3NuYcwi1RMBI_PN2qX6hva';
   var url = 'https://script.google.com/macros/s/' + sheetKey + '/exec';
   var deptColor =
@@ -109,6 +109,10 @@ $(document).ready(function() {
       $('#lastAmount').text(' ' + formatNumber(last_amount));
       $('#diffPercent').text(diffPercent);
       $('#canBuy').text(canBuy(amount));
+
+      // reload FB SDK
+      $('.fb-comments').attr('data-href', 'http://budget.sakamoto.com.tw/' + YEAR + label);
+      FB.XFBML.parse();
     };
 
     function canBuy(price) {
