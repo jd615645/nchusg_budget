@@ -4,13 +4,13 @@ $(document).ready(function() {
   var url = 'https://script.google.com/macros/s/' + sheetKey + '/exec';
   var deptColor =
   [
-    '#6C7A89', '#6C7A89', '#6C7A89', '#6C7A89', '#6C7A89',
-    '#6C7A89', '#6C7A89', '#6C7A89', '#6C7A89', '#6C7A89',
-    '#6C7A89', '#6C7A89', '#6C7A89', '#6C7A89'
+    '#86d4bd', '#9cec93', '#9adabe', '#8bd49c', '#bfe5ac',
+    '#52c7a7', '#7bd0b0', '#8fd6b8', '#7ed097', '#aadd9c',
+    '#aadd9c', '#c6e6a1', '#00b790', '#49c59f'
   ]
   var query_obj = {
     SELECT_COLUMN: [
-      "款", "科", "目", "金額", "前年度預算"
+      '款', '科', '目', '金額', '前年度預算', '備註'
     ]
   };
   window.budgetAll = {'dept': '總預算','label': '總預算', 'amount': 0, 'last_amount': 0, 'children': []};
@@ -24,14 +24,17 @@ $(document).ready(function() {
   $.get('./data/budget.json', function(response) {
     window.budgetDataJson = response;
   // $.get(url, {query: JSON.stringify(query_obj)}, function(response) {
-  //   var budgetDataJson = response.output;
-  //   console.log(JSON.stringify(budgetDataJson));
+  //   window.budgetDataJson = response.output;
+    // console.log(JSON.stringify(budgetDataJson));
 
     // 將budget data做巢狀結構
     $.each(budgetDataJson, function(key, val) {
       var dept = val['款'],
           money= parseInt(val['金額']),
-          lastMoney = parseInt(val['前年度預算']);
+          lastMoney = parseInt(val['前年度預算']),
+          detail = val['備註'];
+
+      // console.log(val);
       var deptIndex = _.findIndex(budgetData, {'label': dept});
 
       // 計算總金額
@@ -39,7 +42,7 @@ $(document).ready(function() {
       budgetAll['last_amount'] += lastMoney;
 
       if (deptIndex == -1) {
-        budgetData.push({'dept': dept, 'label': dept, 'amount': 0, 'last_amount': 0, 'children': [], 'color': ''});
+        budgetData.push({'dept': dept, 'label': dept, 'amount': 0, 'last_amount': 0, 'children': [], 'color': '', 'detail': detail});
         deptIndex = _.findIndex(budgetData, {'label': dept});
         budgetData[deptIndex]['color'] = deptColor[deptIndex];
       }
@@ -55,14 +58,16 @@ $(document).ready(function() {
             subject = jv['科'],
             item = jv['目'],
             money= parseInt(jv['金額']),
-            lastMoney = parseInt(jv['前年度預算']);
+            lastMoney = parseInt(jv['前年度預算']),
+            detail = jv['備註'];
+
         var subjectIndex = _.findIndex(subjectData, {'dept': dept, 'label': subject});
 
         // 計算各部門金額
         budgetData[ik]['amount'] += money;
         budgetData[ik]['last_amount'] += lastMoney;
         if (subjectIndex == -1) {
-          subjectData.push({'dept': dept, 'label': subject, 'amount': 0, 'last_amount': 0, 'children': []});
+          subjectData.push({'dept': dept, 'label': subject, 'amount': 0, 'last_amount': 0, 'children': [], 'detail': detail});
           subjectIndex = _.findIndex(subjectData, {'label': subject});
         }
         subjectData[subjectIndex]['amount'] += money;
@@ -74,7 +79,8 @@ $(document).ready(function() {
           'subject': subject,
           'label': item,
           'amount': money,
-          'last_amount': lastMoney
+          'last_amount': lastMoney,
+          'detail': detail
         };
         subjectData[subjectIndex]['children'].push(itemData);
       });
@@ -130,7 +136,7 @@ $(document).ready(function() {
           fixNum = 0;
         }
         conver = (conver).toFixed(fixNum);
-        return formatNumber(conver) + itemUnit + ' ' + itemName;
+        return '約為 ' + formatNumber(conver) + itemUnit + ' ' + itemName;
       }
     }
 

@@ -808,7 +808,7 @@ var BubbleTree = function(config, onHover, onUnHover) {
       } else {
         // use color from parent node if no other match available
         if (node.level > 0) node.color = node.parent.color;
-        else node.color = '#999999';
+        else node.color = '#7C98B3';
       }
     }
     // lighten up the color if there are no children
