@@ -122,13 +122,17 @@ $(document).ready(function() {
 
   function diffPercent(diffPrice, amount) {
     var prefix = '';
+    if (amount == 0) {
+      return '';
+    }
     if (diffPrice < 0) {
-      num = num*-1;
+      amount = amount*-1;
       prefix = '-';
     }
     else if (diffPrice > 0) {
       prefix = '+';
     }
+
 
     var diffPercent = prefix + (diffPrice/amount*100).toFixed(2) + '%';
 

@@ -25,7 +25,7 @@ $(document).ready(function() {
     window.budgetDataJson = response;
   // $.get(url, {query: JSON.stringify(query_obj)}, function(response) {
   //   window.budgetDataJson = response.output;
-    // console.log(JSON.stringify(budgetDataJson));
+  //   console.log(JSON.stringify(budgetDataJson));
 
     // 將budget data做巢狀結構
     $.each(budgetDataJson, function(key, val) {
@@ -50,6 +50,9 @@ $(document).ready(function() {
       budgetData[deptIndex]['last_amount'] += lastMoney;
       budgetData[deptIndex]['children'].push(val);
     });
+    // $.each(budgetData, function(ik, iv) {
+    //   console.log(iv);
+    // });
     // 將budget data做巢狀結構
     $.each(budgetData, function(ik, iv) {
       var subjectData = [];
@@ -63,9 +66,6 @@ $(document).ready(function() {
 
         var subjectIndex = _.findIndex(subjectData, {'dept': dept, 'label': subject});
 
-        // 計算各部門金額
-        budgetData[ik]['amount'] += money;
-        budgetData[ik]['last_amount'] += lastMoney;
         if (subjectIndex == -1) {
           subjectData.push({'dept': dept, 'label': subject, 'amount': 0, 'last_amount': 0, 'children': [], 'detail': detail});
           subjectIndex = _.findIndex(subjectData, {'label': subject});
