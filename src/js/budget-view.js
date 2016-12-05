@@ -2,6 +2,7 @@ $(document).ready(function() {
   var YEAR = 2016;
   var sheetKey = 'AKfycbxzWsLrzHonUiQe9RCDhoVdcYpoU_3NuYcwi1RMBI_PN2qX6hva';
   var url = 'https://script.google.com/macros/s/' + sheetKey + '/exec';
+  
   var deptColor =
   [
     '#86d4bd', '#9cec93', '#9adabe', '#8bd49c', '#bfe5ac',
