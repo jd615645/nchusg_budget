@@ -63,4 +63,5 @@ gulp.task('watch',function(){
   gulp.watch(paths.src.js, ['scripts']);
 });
 
-gulp.task('default', ['pug', 'less', 'scripts', 'dataSrc', 'webserver', 'watch']);
+gulp.task('default', ['webserver', 'watch']);
+gulp.task('build', ['pug', 'less', 'scripts', 'dataSrc']);
