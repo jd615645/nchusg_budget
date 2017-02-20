@@ -1,12 +1,19 @@
 doctype html
-html(lang='en')
+html(lang='en', prefix='og: http://ogp.me/ns#')
   head
     meta(charset='UTF-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     meta(name='author', content='Sakamoto')
     meta(property='fb:app_id', content='912547778846689')
-    title 中興學生會2016預算
+
+    meta(property='og:title', content='中興學生會2016預算視覺化')
+    meta(property='og:url', content='http://budget.sakamoto.com.tw')
+    meta(property='og:image', content='http://imgur.com/jtTmlcy.jpg')
+    meta(property='og:site_name', content='中興學生會2016預算視覺化')
+    meta(property='og:description', content='中興大學學生會2016年度的預算視覺化')
+
+    title 中興學生會2016預算視覺化
     link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css')
     link(rel='stylesheet', href='./styles/main.css')
     script(type='text/javascript', src='./js/fbSDK.js')
