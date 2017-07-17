@@ -125,6 +125,16 @@ $(document).ready(function () {
         deptHeader += (' > ' + label)
       }
 
+      $('#budgetList li').remove()
+      $('#budgetList').hide()
+      if (node.children.length === 1) {
+        let children = node['children'][0]['children']
+        _.each(children, function (val) {
+          $('#budgetList').append('<li>' + val.label + '</li>')
+        })
+        $('#budgetList').show()
+      }
+
       $('#deptHeaderOut').text(deptHeader)
       $('#amountOut').text(' ' + formatNumber(budget))
       $('#lastAmountOut').text(' ' + formatNumber(last_amount))

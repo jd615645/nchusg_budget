@@ -1,0 +1,14 @@
+extends layout
+block css
+  link(rel='stylesheet', href='./styles/budget_in.css')
+block link
+  -var selected = 'budget_in'
+block content
+  #budget_in
+    #budgetChart
+
+block js
+  script(src='https://code.highcharts.com/highcharts.js')
+  script(src='https://code.highcharts.com/modules/exporting.js')
+  script(src='./js/budget_in.js')
+  
