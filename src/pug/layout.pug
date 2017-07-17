@@ -21,7 +21,7 @@ html(lang='en', prefix='og: http://ogp.me/ns#')
     block css
     block link
       -var selected = 'index'
-    -var menu = { 'index': '預算行星圖', 'budget_out': '歲出決算行星圖', 'budget_table': '科目預算表', 'about': '關於此網頁' }
+    -var menu = { 'index': '預算行星圖', 'budget_out': '歲出決算行星圖', 'budget_table': '科目預算表' }
   body
     #fb-root
     .ui.container
@@ -31,6 +31,10 @@ html(lang='en', prefix='og: http://ogp.me/ns#')
             a.active.item(href=('/'+key+'.html'))= val
           else
             a.item(href=('/'+key+'.html'))= val
+        if (selected === 'about')
+          a.active.ui.right.item(href=('/about.html')) 關於此網頁
+        else
+          a.ui.right.item(href=('/about.html')) 關於此網頁
       block content
 
     script(type='text/javascript', src='./js/jquery.min.js')
