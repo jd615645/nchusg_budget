@@ -19,10 +19,21 @@ html(lang='en', prefix='og: http://ogp.me/ns#')
     script(type='text/javascript', src='./js/fbSDK.js')
 
     block css
+    block link
+      -var selected = 'index'
+    -var menu = { 'index': '預算行星圖', 'budget_out': '歲出決算行星圖', 'budget_table': '科目預算表', 'about': '關於此網頁' }
   body
-    block content
+    #fb-root
+    .ui.container
+      .ui.secondary.pointing.menu#budgetMenu
+        each val, key in menu
+          if selected === key
+            a.active.item(href=('/'+key+'.html'))= val
+          else
+            a.item(href=('/'+key+'.html'))= val
+      block content
 
     script(type='text/javascript', src='./js/jquery.min.js')
-    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js')
+    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js')
     script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js')
     block js

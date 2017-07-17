@@ -3,20 +3,20 @@ block css
   link(rel='stylesheet', href='./styles/bubbletree.css')
   link(rel='stylesheet', href='./styles/budget_view.css')
 block link
-  -var selected = 'index'
+  -var selected = 'budget_out'
 block content
   .bubbletView
     .bubbletree-wrapper
       .bubbletree
     .detail-data
-      h2#deptHeader
+      h2#deptHeaderOut
         | 部門
       h2#thisYearBudget
-        | 本年度預算約
-        span#amount
-      h3#canBuy
+        | 本年度決算約
+        span#amountOut
+      h3#canBuyOut
       h2#lastYearBudget
-        | 前年度預算約
+        | 與預算差額
         span#lastAmount
         span#diffPercent
       .fb-comments(data-href='http://budget.sakamoto.com.tw', data-numposts='3', data-width="100%")
@@ -30,5 +30,4 @@ block js
   script(type='text/javascript', src='./js/bubbletree.js')
   script(type='text/javascript', src='./js/cofog.js')
   script(type='text/javascript', src='./js/semanticui-init.js')
-  script(type='text/javascript', src='./js/budget-view.js')
-  script(type='text/javascript', src='./js/budget-table.js')
+  script(type='text/javascript', src='./js/budgetout-view.js')

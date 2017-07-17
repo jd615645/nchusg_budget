@@ -1,7 +1,5 @@
 $(document).ready(function() {
   var YEAR = 2016;
-  var sheetKey = 'AKfycbxzWsLrzHonUiQe9RCDhoVdcYpoU_3NuYcwi1RMBI_PN2qX6hva';
-  var url = 'https://script.google.com/macros/s/' + sheetKey + '/exec';
   
   var deptColor =
   [
@@ -14,7 +12,7 @@ $(document).ready(function() {
       '款', '科', '目', '金額', '前年度預算', '備註'
     ]
   };
-  window.budgetAll = {'dept': '總預算','label': '總預算', 'amount': 0, 'last_amount': 0, 'children': []};
+  var budgetAll = {'dept': '總預算','label': '總預算', 'amount': 0, 'last_amount': 0, 'children': []};
 
   var can_buy;
 
@@ -23,7 +21,7 @@ $(document).ready(function() {
     can_buy = data;
   });
   $.get('./data/budget.json', function(response) {
-    window.budgetDataJson = response;
+    var budgetDataJson = response;
   // $.get(url, {query: JSON.stringify(query_obj)}, function(response) {
   //   window.budgetDataJson = response.output;
   //   console.log(JSON.stringify(budgetDataJson));
@@ -89,10 +87,10 @@ $(document).ready(function() {
     });
 
     var onNodeClick = function(node) {
-      var dept = node.dept,
-          label = node.label,
-          subject = node.subject,
-          amount = node.amount,
+      var dept = node.dept
+          label = node.label
+          subject = node.subject
+          amount = node.amount
           last_amount = node.last_amount;
 
       var deptHeader = dept;
@@ -118,7 +116,7 @@ $(document).ready(function() {
       $('#canBuy').text(canBuy(amount));
 
       // reload FB SDK
-      $('.fb-comments').attr('data-href', 'http://budget.sakamoto.com.tw/' + YEAR + label);
+      $('.fb-comments').attr('data-href', 'http://budget.sakamoto.com.tw/in-' + YEAR + label);
       FB.XFBML.parse();
     };
 

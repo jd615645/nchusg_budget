@@ -1,0 +1,43 @@
+extends layout
+block css
+  link(rel='stylesheet', href='./styles/about.css')
+block link
+  -var selected = 'about'
+block content
+  #aboutWeb
+    table
+      tr
+        td 使用套件
+        td
+          p Semantic UI
+          p JQuery
+          p
+            a(href='https://lodash.com/', target='_blank') lodash.js
+          p
+            a(href='https://github.com/okfn/bubbletree', target='_blank') okfn/bubbletree
+
+    table
+      tr
+        td Data Source
+        td
+          p
+            a(href='https://drive.google.com/drive/folders/0B370vEVixLOxRUUzT205eWs0cTQ' target='_blank') 2016年中興大學學生會歲出預算excel
+          p
+            a(href='./data/budget.json', target='_blank') 2016年中興大學學生會歲出預算JSON
+          //- p
+          //-   a(href='#', target='_blank') 2016年中興大學學生會歲出預算CSV
+    table
+      tr
+        td Data converter
+        td
+          p
+            a(href='https://github.com/David-Tsui/Google_Spreadsheet_RESTful', target='_blank') David-Tsui/Google_Spreadsheet_RESTful
+    table
+      tr
+        td Project GitHub
+        td
+          p
+            a(href='https://github.com/jd615645/nchusg_budget' target='_blank') jd615645/nchusg_budget
+
+block js
+  script(type='text/javascript', src='./js/semanticui-init.js')
