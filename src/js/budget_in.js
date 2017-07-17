@@ -1,4 +1,4 @@
-Highcharts.chart('budget_in', {
+Highcharts.chart('budgetChart', {
   chart: {
     plotBackgroundColor: null,
     plotBorderWidth: null,
@@ -19,7 +19,8 @@ Highcharts.chart('budget_in', {
         enabled: true,
         format: '<b>{point.name}</b>: {point.percentage:.1f} %',
         style: {
-          color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+          color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+          fontSize: '1.4em'
         }
       }
     }

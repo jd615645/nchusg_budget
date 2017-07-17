@@ -1,0 +1,49 @@
+extends layout
+block css
+  link(rel='stylesheet', href='./styles/budget_table.css')
+block link
+  -var selected = 'budget_out_table'
+block content
+  #app
+    .ui.secondary.menu
+      a.item(:class='{ active: active === 0 }', @click='active = 0; keyword = "";')
+        | 總科目表
+      a.item(:class='{ active: active === 1 }', @click='active = 1; keyword = "";')
+        | 只看款
+      a.item(:class='{ active: active === 2 }', @click='active = 2; keyword = "";')
+        | 只看科
+
+    .ui.icon.input
+      input(type='text', placeholder='搜尋款科目名稱...', v-model='keyword')
+      i.search.icon
+
+    table.ui.unstackable.striped.table
+      thead
+        tr
+          th(v-for='title in titles') {{ title }}
+      tbody
+        tr(v-for='data in tableAll', v-if='active === 0')
+          td
+            p {{ data.dept }}
+          td
+            p {{ data.subject }}
+          td
+            p {{ data.item }}
+          td
+            p {{ data.amount }}
+        tr(v-for='data in tableDept', v-if='active === 1')
+          td
+            p {{ data.dept }}
+          td
+            p {{ data.amount }}
+        tr(v-for='data in tableSubject', v-if='active === 2')
+          td
+            p {{ data.dept }}
+          td
+            p {{ data.subject }}
+          td
+            p {{ data.amount }}
+
+block js
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.js')
+  script(type='text/javascript', src='./js/budget-out-table.js')
