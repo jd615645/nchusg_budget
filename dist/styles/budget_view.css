@@ -1,0 +1,55 @@
+.bubbletree-wrapper {
+  height: 90%;
+  width: 60%;
+}
+.bubbletree-wrapper .bubbletree-desc {
+  font-size: 16px !important;
+}
+.bubbletView,
+#budgetTable,
+#aboutWeb {
+  position: relative;
+  height: 90%;
+}
+#thisYearBudget {
+  margin-bottom: 5px;
+}
+#canBuy {
+  margin-top: 0px;
+}
+#budgetTable table thead th,
+#budgetTable table tbody td {
+  text-align: right;
+}
+#budgetTable table thead th:first-child,
+#budgetTable table tbody td:first-child {
+  text-align: left;
+}
+#budgetTable table span.upper {
+  color: green;
+}
+#budgetTable table span.lower {
+  color: red;
+}
+#budgetList {
+  margin: 0px;
+}
+#budgetList li {
+  margin-bottom: 5px;
+  font-size: 1.4em;
+}
+.detail-data {
+  height: 100%;
+  width: 40%;
+  position: absolute;
+  left: 60%;
+  right: 0;
+  flex-direction: column;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+.detail-data .ui.accordion .title {
+  color: #3A4750;
+}
