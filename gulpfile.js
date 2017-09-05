@@ -1,8 +1,9 @@
-var gulp = require('gulp')
-// var path = require('path')
-var $ = require('gulp-load-plugins')()
+const gulp = require('gulp')
+const runSequence = require('run-sequence')
+const ghPages = require('gulp-gh-pages')
+const $ = require('gulp-load-plugins')()
 
-var paths = {
+const paths = {
   src: {
     less: './src/style/*.less',
     js: './src/js/*.js',
@@ -55,6 +56,11 @@ gulp.task('webserver', () => {
       livereload: true,
       directoryListing: false
     }))
+})
+
+gulp.task('deploy', () => {
+  gulp.src('dist/**/*')
+    .pipe(ghPages())
 })
 
 gulp.task('watch', () => {
