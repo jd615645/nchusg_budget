@@ -59,7 +59,7 @@ gulp.task('webserver', () => {
 })
 
 gulp.task('deploy', () => {
-  gulp.src('dist/**/*')
+  return gulp.src('dist/**/*')
     .pipe(ghPages())
 })
 
